@@ -1,4 +1,6 @@
+// Import Express.js
 const notes = require('express').Router();
+// Helper functions for reading, writing and deleting to the JSON file
 const { readFromFile, readAndAppend, readAndDelete } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
 
@@ -12,9 +14,10 @@ notes.get('/', (req, res) => {
 notes.post('/', (req, res) => {
   console.info(`${req.method} request received to add a note`);
   console.log(req.body);
-
+  // Destructuring assignment for the items in req.body
   const { title, text} = req.body;
 
+  // If all the required properties are present
   if (req.body) {
     const newNote = {
         title,
