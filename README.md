@@ -4,7 +4,9 @@
   
   ## Description
   
-  This application called Note Taker can be used to write and save notes. This application uses an Express.js back end, saves and retrieves note data from a JSON file.
+  This application called Note Taker can be used to write and save notes. This application uses an Express.js back end, saves and retrieves note data from a JSON file. 
+  
+  This App has been deployed on Heroku. If you want test the project you can clic here --> [Note Taker](https://cryptic-woodland-10096-ab47aec72412.herokuapp.com/)
   
   ## Table of Contents
   
@@ -46,11 +48,7 @@
   
   ## Tests
   
-  To run tests, run the following command:
-  
-  ```properties
-  npm test
-  ```  
+  -
   
   ## Questions
 
