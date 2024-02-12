@@ -1,5 +1,6 @@
 const notes = require('express').Router();
-const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
+const { readFromFile, readAndAppend, readAndDelete } = require('../helpers/fsUtils');
+const uuid = require('../helpers/uuid');
 
 // GET Route for retrieving all the notes
 notes.get('/', (req, res) => {
@@ -7,26 +8,39 @@ notes.get('/', (req, res) => {
   readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
-// // POST Route for a new UX/UI tip
-// tips.post('/', (req, res) => {
-//   console.info(`${req.method} request received to add a tip`);
-//   console.log(req.body);
+// POST Route for a new UX/UI note
+notes.post('/', (req, res) => {
+  console.info(`${req.method} request received to add a note`);
+  console.log(req.body);
 
-//   const { username, topic, tip } = req.body;
+  const { title, text} = req.body;
 
-//   if (req.body) {
-//     const newTip = {
-//       username,
-//       tip,
-//       topic,
-//       tip_id: uuid(),
-//     };
+  if (req.body) {
+    const newNote = {
+        title,
+        text,
+        id: uuid(),
+    };
 
-//     readAndAppend(newTip, './db/tips.json');
-//     res.json(`Tip added successfully`);
-//   } else {
-//     res.error('Error in adding tip');
-//   }
-// });
+    readAndAppend(newNote, './db/db.json');
+    res.json(`Note added successfully`);
+  } else {
+    res.error('Error in adding note');
+  }
+});
+
+// DELETE a note
+notes.delete('/:id', (req, res) => {
+  console.info(`${req.method} request received to delete a note`);
+
+  if (req.params.id) {
+    const noteId = req.params.id;
+    readAndDelete(noteId, './db/db.json');
+
+    res.json(`Note deleted successfully`);
+  } else {
+    res.error('Error in deleting note');
+  }
+});
 
 module.exports = notes;
